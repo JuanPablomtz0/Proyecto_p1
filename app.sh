@@ -59,6 +59,15 @@ agregar() {
 
 }
 
+buscar(){
+  elementobuscar=""
+  file="$1"
+  echo "ingrese elemento a buscar"
+  read elementobuscar
+  grep elementobuscar file.inf	
+
+}
+
 menu(){
   echo "Usted esta en la sección $1, seleccione la opción que desea utilizar."
   echo "1)Agregar información"
@@ -74,7 +83,8 @@ menu(){
       ;;
     2 )
     echo "2"
-      ;;
+    buscar $1
+	 ;;
     3 )
     echo "3"
       ;;
