@@ -59,6 +59,17 @@ agregar() {
 
 }
 
+buscar(){
+  elementobuscar=""
+  file="$1"
+  echo "ingrese elemento a buscar"
+  read elementobuscar
+  grep elementobuscar file.inf
+
+}
+
+
+
 eliminar(){
   file="$1.inf"
   echo "Eliminar"
@@ -88,7 +99,6 @@ leer(){
   done<$file
 }
 
-
 menu(){
   echo "Usted esta en la sección $1, seleccione la opción que desea utilizar."
   echo "1)Agregar información"
@@ -104,7 +114,8 @@ menu(){
       ;;
     2 )
     echo "2"
-      ;;
+    buscar $1
+	 ;;
     3 )
     echo "3"
     eliminar $1
