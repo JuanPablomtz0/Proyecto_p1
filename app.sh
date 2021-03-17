@@ -75,6 +75,37 @@ eliminar(){
   sed -i '/$conceptoeliminar/d' ./$file.inf
 }
 
+
+
+eliminar(){
+  file="$1.inf"
+  echo "Eliminar"
+  echo "intorduce concepto"
+  read concepto
+  concepto="[$concepto]"
+  length=${#concepto}
+  i=1
+  while read line; do
+    lineLength=${#line}
+    if [[ $lineLength -gt $length ]]; then
+      substr="${line:0:$length}"
+      if [[ "$concepto" ==  "$substr" ]]; then
+        dLines="${i}d"
+        sed -i $dLines $file
+      fi
+    fi
+    i=$((i+1))
+  done<$file
+}
+
+leer(){
+  file="$1.inf"
+  echo "Leer"
+  while read line; do
+    echo "$line"
+  done<$file
+}
+
 menu(){
   while [[ $opcions -ne 5 ]]; do
       echo "Usted esta en la sección $1, seleccione la opción que desea utilizar."
