@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+# paso 1
 menu(){
   echo "Usted esta en la sección $1, seleccione la opción que desea utilizar."
   echo "1)Agregar información"
@@ -65,8 +65,6 @@ elif [[ $1 == "-t" ]]; then
 else
   echo "a bueno bai"
 fi
-
-
 
 
 # paso 3
