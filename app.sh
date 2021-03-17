@@ -51,36 +51,32 @@ agregar() {
   read -p "Concepto a agregar: " concepto
   echo "Definicion: "
   read definicion
-
-  echo $concepto
-  echo $definicion
-
   echo -e "[$concepto].- $definicion" >> "./$file.inf"
 
 }
 
 buscar(){
-  elementobuscar=""
-  file="$1"
-  echo "ingrese elemento a buscar"
-  read elementobuscar
-  grep -i "[$elementobuscar].-" ./$file.inf
+  file="$1.inf"
+  echo "Intorduce concepto a buscar:"
+  read concepto
+  concepto="[$concepto]"
+  length=${#concepto}
+  while read line; do
+    lineLength=${#line}
+    if [[ $lineLength -gt $length ]]; then
+      substr="${line:0:$length}"
+      if [[ "$concepto" ==  "$substr" ]]; then
+        echo "$line"
+      fi
+    fi
+  done<$file
 
 }
-eliminar(){
-  file="$1"
-  conceptoeliminar=""
-  echo "Ingrese concepto a eliminar: "
-  read conceptoeliminar
-  sed -i '/$conceptoeliminar/d' ./$file.inf
-}
-
-
 
 eliminar(){
   file="$1.inf"
   echo "Eliminar"
-  echo "intorduce concepto"
+  echo "Intorduce concepto a eliminar:"
   read concepto
   concepto="[$concepto]"
   length=${#concepto}
@@ -100,120 +96,107 @@ eliminar(){
 
 leer(){
   file="$1.inf"
-  echo "Leer"
+  echo -e "La base de datos de $1 tiene:\n"
   while read line; do
     echo "$line"
   done<$file
 }
 
 menu(){
+  opcions=0
   while [[ $opcions -ne 5 ]]; do
-      echo "Usted esta en la sección $1, seleccione la opción que desea utilizar."
+      echo -e "\nUsted esta en la sección $1, seleccione la opción que desea utilizar."
       echo "1)Agregar información"
       echo "2)Buscar"
       echo "3)Eliminar información"
       echo "4)Leer base de información"
-      echo "5) Salir"
-      echo "introduce opcion: "
+      echo "5)Salir"
+      echo "Introduce una opcion:"
       read opcions
       case $opcions in
         1 )
-        echo "1"
         agregar $1
           ;;
         2 )
-        echo "2"
         buscar $1
     	 ;;
         3 )
-        echo "3"
         eliminar $1
           ;;
         4 )
-        echo "4"
+        leer $1
           ;;
         5)
-        echo "Salir"
+        echo "Volver"
           ;;
         * )
-        echo "no es opcion"
+        echo "No es opcion"
           ;;
     esac
   done
 }
 
+# genera los documentos
 crear
-
-# desmadre v
 
 
 if [[ $1 == "-a" ]]; then
-opciona=0
+  opciona=0
   while [[ $opciona -ne 5 ]]; do
 
-    echo "Bienvenido a la guía rápida de Agile, para continuar seleccione un tema:"
+    echo -e "\nBienvenido a la guía rápida de Agile, para continuar seleccione un tema:"
     echo "1.SCRUM"
     echo "2.X.P."
     echo "3.Kanban"
     echo "4.Crystal"
-    echo "5.salir"
-    echo "introduce opcion:"
+    echo "5.Volver"
+    echo "Introduce una opcion:"
     read opciona
     case $opciona in
       1 )
-      echo "SCRUM"
         menu "scrum"
         ;;
       2 )
-      echo "X.P."
         menu "xp"
         ;;
       3 )
-      echo "Kanban"
         menu "kanban"
         ;;
       4 )
-      echo "Crystal"
         menu "crystal"
         ;;
       5 )
-      echo "Salir"
+      echo "Goodbye <3"
         ;;
       esac
   done
 
-
-
-
 elif [[ $1 == "-t" ]]; then
   opciont=0
-  while [[ $opciont -ne 4 ]]; do
-    echo "Bienvenido a la guía rápida de metodologías tradicionales, para continuar seleccione un tema:"
+  while [[ $opciont -ne 5 ]]; do
+    echo -e "\nBienvenido a la guía rápida de metodologías tradicionales, para continuar seleccione un tema:"
     echo "1.Cascada"
     echo "2.Espiral"
     echo "3.Modelo V"
-    echo "4.salir"
-    echo "introduce opcion:"
+    echo "5.Volver"
+    echo "Introduce una opcion:"
     read opciont
     case $opciont in
       1 )
-      echo "Cascada"
         menu "cascada"
         ;;
       2 )
-      echo "Espiral"
         menu "espiral"
         ;;
       3 )
-      echo "modelov"
         menu "modelov"
         ;;
-      4)
-      echo "Salir"
+      5 )
+      echo "Goodbye <3"
         ;;
 
     esac
   done
 else
-  echo "a bueno bai"
+  echo "Parametro no valido"
 fi
