@@ -1,6 +1,5 @@
 #!/bin/bash
 
-<<<<<<< HEAD
 
 menu(){
   echo "Usted esta en la sección $1, seleccione la opción que desea utilizar."
@@ -30,9 +29,7 @@ menu(){
 }
 
 
-=======
-# paso 1
->>>>>>> 1596394a8d742524c8e0b42683125344afb531e2
+
 if [[ $1 == "-a" ]]; then
   echo "Bienvenido a la guía rápida de Agile, para continuar seleccione un tema:"
   echo "1.SCRUM"
