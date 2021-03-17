@@ -59,6 +59,36 @@ agregar() {
 
 }
 
+eliminar(){
+  file="$1.inf"
+  echo "Eliminar"
+  echo "intorduce concepto"
+  read concepto
+  concepto="[$concepto]"
+  length=${#concepto}
+  i=1
+  while read line; do
+    lineLength=${#line}
+    if [[ $lineLength -gt $length ]]; then
+      substr="${line:0:$length}"
+      if [[ "$concepto" ==  "$substr" ]]; then
+        dLines="${i}d"
+        sed -i $dLines $file
+      fi
+    fi
+    i=$((i+1))
+  done<$file
+}
+
+leer(){
+  file="$1.inf"
+  echo "Leer"
+  while read line; do
+    echo "$line"
+  done<$file
+}
+
+
 menu(){
   echo "Usted esta en la sección $1, seleccione la opción que desea utilizar."
   echo "1)Agregar información"
@@ -77,9 +107,11 @@ menu(){
       ;;
     3 )
     echo "3"
+    eliminar $1
       ;;
     4 )
     echo "4"
+    leer $1
       ;;
     * )
     echo "no es opcion"
@@ -123,6 +155,22 @@ elif [[ $1 == "-t" ]]; then
   echo "1.Cascada"
   echo "2.Espiral"
   echo "3.Modelo V"
+  echo "introduce opcion:"
+  read opcion
+  case $opcion in
+    1 )
+    echo "Cascada"
+      menu "cascada"
+      ;;
+    2 )
+    echo "Espiral"
+      menu "espiral"
+      ;;
+    3 )
+    echo "modelov"
+      menu "modelov"
+      ;;
+    esac
 else
   echo "a bueno bai"
 fi
